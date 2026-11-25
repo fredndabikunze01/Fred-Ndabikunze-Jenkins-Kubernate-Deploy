@@ -78,6 +78,23 @@ Open <http://localhost:3000>. Stop the container with **Ctrl+C** in the
 terminal. The `--rm` option removes the stopped container; it does not remove
 the image.
 
+## Deploy with Jenkins
+
+The root-level `Jenkinsfile` pulls
+`fredndabikunze01/fred-ndabikunze-juice-ship:v6.0`, replaces the
+`juice-shop-jenkins` container, and checks that the app responds on port `3000`.
+
+1. Configure a Jenkins Pipeline job to use this repository's `Jenkinsfile`.
+2. Run the job on a persistent Jenkins agent that shares a host with its Docker
+   Engine, and has `curl` installed. The Docker Hub image must be public, or
+   Docker Hub credentials must already be configured on that agent.
+3. After a successful build, open `http://localhost:3000` on the agent host.
+
+The pipeline binds the app to `127.0.0.1` so it is not exposed to the network.
+Change `HOST_PORT` in the `Jenkinsfile` if port `3000` is already in use.
+Juice Shop is intentionally vulnerable; keep it on a trusted, isolated
+machine or network.
+
 ## Troubleshooting
 
 - **Cannot connect to Docker:** Start Docker Desktop or the Docker Engine, then
